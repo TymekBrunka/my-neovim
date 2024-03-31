@@ -21,7 +21,7 @@ vim.g.mapleader = " "
 require("plugins")
 
 vim.cmd("set number relativenumber splitright splitbelow")
-vim.cmd("colorscheme catppuccin-frappe")
+vim.cmd("colorscheme everforest")
 -- vim.cmd("hi Normal ctermbg=NONE guibg=NONE")
 vim.cmd("set expandtab tabstop=4 shiftwidth=4 softtabstop=4")
 
