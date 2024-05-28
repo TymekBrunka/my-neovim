@@ -77,7 +77,7 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     --[qol plugins]
     {
-        "mg979/vim-visual-multi"
+        "mg979/vim-visual-multi" --if removed, lualine wont work bc i made it depend on it in after/plugins/lualine.lua
     },
     {
         "kylechui/nvim-surround",
@@ -151,7 +151,7 @@ return {
     },
     --[buffer quickswitch]
     {
-        "ghillb/cybu.nvim",
+        "ghillb/cybu.nvim", --buffer quick switch
         branch = "main",                                                       -- timely updates
         -- branch = "v1.x", -- won't receive breaking changes
         requires = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, -- optional for icon support
@@ -163,6 +163,7 @@ return {
         end
     },
     --[SUStech overpowered selection manager]
+    --enter to increase selection and backspace to decrease
     {
         "sustech-data/wildfire.nvim",
         event = "VeryLazy",
@@ -197,7 +198,7 @@ return {
         opts = {} -- this is equalent to setup({}) function
     },
     {
-        "epwalsh/obsidian.nvim",
+        "epwalsh/obsidian.nvim", --note taking plugin
         version = "*", -- recommended, use latest release instead of latest commit
         lazy = true,
         ft = "markdown",
@@ -211,15 +212,14 @@ return {
             require("scrollbar").setup()
         end,
     },
-    --[modern which-key]
     {
-        "Cassin01/wf.nvim",
+        "Cassin01/wf.nvim", --modern which-key
         config = function()
             require("wf").setup()
         end,
     },
     {
-        "cshuaimin/ssr.nvim",
+        "cshuaimin/ssr.nvim", --select and replace with variables and multiline support
         module = "ssr",
         -- Calling setup is optional.
         config = function()
@@ -276,7 +276,7 @@ return {
         end,
     },
     {
-        "ggandor/leap.nvim",
+        "ggandor/leap.nvim", --plugin for jumping in code
         config = function()
             -- require('leap').create_default_mappings()
             vim.keymap.set('', 's', '<Plug>(leap)')
@@ -300,7 +300,7 @@ return {
         end
     },
     {
-        'phaazon/hop.nvim',
+        'phaazon/hop.nvim', --another one
         branch = 'v2', -- optional but strongly recommended
         config = function()
             -- you can configure Hop the way you like here; see :h hop-config
@@ -337,7 +337,7 @@ return {
         end,
     },
     {
-        "tpope/vim-fugitive",
+        "tpope/vim-fugitive", --gyt klone
         config = function()
             vim.keymap.set("", "<A-g>a", function()
                 vim.cmd("Git add .")
@@ -364,7 +364,7 @@ return {
         end
     },
     {
-        "lukas-reineke/headlines.nvim",
+        "lukas-reineke/headlines.nvim", --for markdown (they are nice)
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = true, -- or `opts = {}`
     },

@@ -27,7 +27,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-function MasonLspPackages()
+function MasonLspPackages() --get all mason lsp's and return config for every single one of them
 	local registry = require("mason-registry")
 	local lsp = {}
 	for _, pkg_info in ipairs(registry.get_installed_packages()) do
@@ -43,25 +43,6 @@ function MasonLspPackages()
 		end
 	end
 	return lsp
-end
-
-
-function MasonSetupLsp()
-	local registry = require("mason-registry")
-    local lsp = {}
-    for _, pkg_info in ipairs(registry.get_installed_packages()) do
-        for _, type in ipairs(pkg_info.spec.categories) do
-            if type == "LSP" then
-                lsp[pkg_info.name] = function()
-                    require("lspconfig")[pkg_info.name].setup {
-                        on_attach = on_attach,
-                        capabilities = capabilities,
-                    }
-                end
-            end
-        end
-    end
-    return lsp
 end
 
 lsps = {
@@ -100,8 +81,8 @@ lsps = {
 
 }
 
-for _, v in ipairs(MasonLspPackages()) do
+for _, v in ipairs(MasonLspPackages()) do --merge lsp table and lsp autoconfig
     lsps.insert(v)
 end
 
-require("mason-lspconfig").setup_handlers(lsps)
+require("mason-lspconfig").setup_handlers(lsps) --setup lsp's
