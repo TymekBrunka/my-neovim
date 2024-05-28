@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "tsserver", "html", "pyright" }
+    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "tsserver", "html", "pyright", "clangd" }
 })
 
 local on_attach = function(_, bufnr)
@@ -10,16 +10,16 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
+    vim.keymap.set('n', '<leader>f', function()
         vim.lsp.buf.format { async = true }
     end, opts)
 end
@@ -27,7 +27,44 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-require("mason-lspconfig").setup_handlers({
+function MasonLspPackages()
+	local registry = require("mason-registry")
+	local lsp = {}
+	for _, pkg_info in ipairs(registry.get_installed_packages()) do
+		for _, type in ipairs(pkg_info.spec.categories) do
+			if type == "LSP" then
+                lsp[pkg_info.name] = function()
+                    require("lspconfig")[pkg_info.name].setup {
+                        on_attach = on_attach,
+                        capabilities = capabilities,
+                    }
+                end
+			end
+		end
+	end
+	return lsp
+end
+
+
+function MasonSetupLsp()
+	local registry = require("mason-registry")
+    local lsp = {}
+    for _, pkg_info in ipairs(registry.get_installed_packages()) do
+        for _, type in ipairs(pkg_info.spec.categories) do
+            if type == "LSP" then
+                lsp[pkg_info.name] = function()
+                    require("lspconfig")[pkg_info.name].setup {
+                        on_attach = on_attach,
+                        capabilities = capabilities,
+                    }
+                end
+            end
+        end
+    end
+    return lsp
+end
+
+lsps = {
 
     ["lua_ls"] = function()
         require('neodev').setup({
@@ -53,17 +90,6 @@ require("mason-lspconfig").setup_handlers({
         }
     end,
 
-    ["cssls"] = function()
-        require("lspconfig").cssls.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            Lua = {
-                workspace = { checkThirdParty = false },
-                telemetry = { enable = false },
-            }
-        }
-    end,
-
     ["tsserver"] = function()
         require("lspconfig").tsserver.setup {
             on_attach = on_attach,
@@ -72,28 +98,10 @@ require("mason-lspconfig").setup_handlers({
         }
     end,
 
-    ["html"] = function()
-        require("lspconfig").html.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            root_dir = function() return vim.loop.cwd() end
-        }
-    end,
+}
 
-    ["rust_analyzer"] = function()
-        require("lspconfig").rust_analyzer.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            -- root_dir = function() return vim.loop.cwd() end
-        }
-    end,
+for _, v in ipairs(MasonLspPackages()) do
+    lsps.insert(v)
+end
 
-    ["pyright"] = function()
-        require("lspconfig").pyright.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            -- root_dir = function() return vim.loop.cwd() end
-        }
-    end
-
-})
+require("mason-lspconfig").setup_handlers(lsps)

@@ -1,3 +1,29 @@
+function vm_active()
+    return not(( vim.b.VM_Selection == vim.empty_dict() ) or ( vim.b.VM_Selection == nil ) or ( next(vim.b.VM_Selection) == nil ))
+end
+
+-- function fmt_vm_active()
+--     if vm_active() then
+--         return ""
+--     else
+--         return ""
+--     end
+-- end
+
+function vvmulti()
+    if vm_active() then
+        local vminfo = vim.api.nvim_call_function('VMInfos', {})
+        return "" .. " " .. vminfo["status"] .. " " .. vminfo["ratio"]
+    else
+        return ""
+    end
+end
+
+--disable vim-visual-multi statusline rendering for no flickering
+vim.cmd("\
+let g:VM_set_statusline = 2\
+")
+
 require('lualine').setup {
     options = {
     icons_enabled = true,
@@ -18,7 +44,10 @@ require('lualine').setup {
     }
     },
     sections = {
-    lualine_a = {'mode'},
+    lualine_a = {
+        {'mode', separator = ""},
+        {vvmulti}
+    },
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filename'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},

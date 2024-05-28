@@ -1,6 +1,12 @@
 vim.g.mapleader = " "
 --[ Lazy.nvim ]
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+    local custom_config_path = vim.fn.expand('<sfile>:p:h')
+    vim.o.runtimepath = custom_config_path .. ',' .. vim.o.runtimepath
+
+    local lazypath = custom_config_path .. "/lazy"
+    -- local lazypath = "~/.config/nvim/lazy/lazy.nvim"
     if not vim.loop.fs_stat(lazypath) then
       vim.fn.system({
 	"git",
@@ -33,7 +39,7 @@ vim.keymap.set("n", "<leader>p", function()
   vim.cmd("ProjectMgr")
 end, {})
 
--- vim.keymap.set("i", "<C-s>", "<CR>:w<CR>i", {})
+vim.keymap.set("", "<C-S>", "<CMD>:w<CR>", {})
 
 -- vim.keymap.set("n", "<leader>nm", function()
 -- 	vim.cmd('if buffer_number("~/note.md") != -1 \
