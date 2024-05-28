@@ -28,21 +28,21 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 function MasonLspPackages() --get all mason lsp's and return config for every single one of them
-	local registry = require("mason-registry")
-	local lsp = {}
-	for _, pkg_info in ipairs(registry.get_installed_packages()) do
-		for _, type in ipairs(pkg_info.spec.categories) do
-			if type == "LSP" then
+    local registry = require("mason-registry")
+    local lsp = {}
+    for _, pkg_info in ipairs(registry.get_installed_packages()) do
+        for _, type in ipairs(pkg_info.spec.categories) do
+            if type == "LSP" then
                 lsp[pkg_info.name] = function()
                     require("lspconfig")[pkg_info.name].setup {
                         on_attach = on_attach,
                         capabilities = capabilities,
                     }
                 end
-			end
-		end
-	end
-	return lsp
+            end
+        end
+    end
+    return lsp
 end
 
 lsps = {
@@ -53,7 +53,7 @@ lsps = {
                 enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
                 -- these settings will be used for your Neovim config directory
                 runtime = true, -- runtime path
-                types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+                types = true,   -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
                 plugins = true, -- installed opt or start plugins in packpath
                 -- you can also specify the list of plugins to make available as a workspace library
                 -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
