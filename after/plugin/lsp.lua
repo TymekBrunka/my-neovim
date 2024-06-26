@@ -28,24 +28,21 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 function MasonLspPackages() --get all mason lsp's and return config for every single one of them
-    local registry = require("mason-registry")
+    -- local registry = require("mason-registry")
+    local servers = require("mason-lspconfig").get_installed_servers()
     local lsp = {}
-    for _, pkg_info in ipairs(registry.get_installed_packages()) do
-        for _, type in ipairs(pkg_info.spec.categories) do
-            if type == "LSP" then
-                lsp[pkg_info.name] = function()
-                    require("lspconfig")[pkg_info.name].setup {
-                        on_attach = on_attach,
-                        capabilities = capabilities,
-                    }
-                end
-            end
+    for _, ls in pairs(servers) do
+        lsp[ls] = function()
+            require("lspconfig")[ls].setup {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }
         end
     end
     return lsp
 end
 
-lsps = {
+local lsp = {
 
     ["lua_ls"] = function()
         require('neodev').setup({
@@ -81,8 +78,15 @@ lsps = {
 
 }
 
-for _, v in ipairs(MasonLspPackages()) do --merge lsp table and lsp autoconfig
-    lsps.insert(v)
+local lsps = MasonLspPackages()
+for k, v in pairs(lsp) do --merge lsp table and lsp autoconfig
+    -- print(k)
+    lsps[k] = v
+end
+
+
+for k, v in pairs(lsps) do --merge lsp table and lsp autoconfig
+    -- print("lsp: " .. k)
 end
 
 require("mason-lspconfig").setup_handlers(lsps) --setup lsp's

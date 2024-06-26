@@ -13,34 +13,36 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 lua/pplugins.lua
-badd +49 ~/.config/nvim/after/plugin/lualine.lua
+badd +23 lua/pplugins.lua
+badd +89 after/plugin/lsp.lua
+badd +99 ~/.config/nvim/after/plugin/lualine.lua
 argglobal
 %argdel
-edit lua/pplugins.lua
+edit ~/.config/nvim/after/plugin/lualine.lua
 argglobal
+balt after/plugin/lsp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=99
+setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
-setlocal nofen
+setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 28) / 56)
+let s:l = 99 - ((55 * winheight(0) + 28) / 56)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 99
+normal! 072|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=20
+set winheight=1 winwidth=1
 let &shortmess = s:shortmess_save
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
@@ -48,7 +50,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

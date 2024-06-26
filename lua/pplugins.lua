@@ -393,10 +393,10 @@ return {
         end,
     },
     "alec-gibson/nvim-tetris",
-    {
-        'kevinhwang91/nvim-ufo', --folding plugin
-        dependencies = {
-            'kevinhwang91/promise-async'
-        }
-    }
+    -- {
+    --     'kevinhwang91/nvim-ufo', --folding plugin
+    --     dependencies = {
+    --         'kevinhwang91/promise-async'
+    --     }
+    -- }
 }
