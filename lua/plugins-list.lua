@@ -118,7 +118,7 @@ return {
                     -- Available modes for `mode`: foreground, background,  virtualtext
                     mode = "background", -- Set the display mode.
                     -- Available methods are false / true / "normal" / "lsp" / "both"
-                    -- True is same as normal 
+                    -- True is same as normal
                     tailwind = false,                                -- Enable tailwind colors
                     -- parsers can contain values used in |user_default_options|
                     sass = { enable = false, parsers = { "css" }, }, -- Enable sass colors
@@ -143,7 +143,7 @@ return {
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
     },
-    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+    { "lukas-reineke/indent-blankline.nvim",      main = "ibl",  opts = {} },
     --[project manager]
     {
         'charludo/projectmgr.nvim',
@@ -151,7 +151,7 @@ return {
     },
     --[buffer quickswitch]
     {
-        "ghillb/cybu.nvim", --buffer quick switch
+        "ghillb/cybu.nvim",                                                    --buffer quick switch
         branch = "main",                                                       -- timely updates
         -- branch = "v1.x", -- won't receive breaking changes
         requires = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" }, -- optional for icon support
@@ -186,10 +186,10 @@ return {
         end,
     },
     {
-        "Pocco81/true-zen.nvim",
+        "folke/zen-mode.nvim",
         config = function()
-            require("true-zen").setup()
-            vim.keymap.set("", "<leader><leader>z", ":TZAtaraxis<CR>", {})
+            require("zen-mode").setup()
+            vim.keymap.set("", "<leader><leader>z", ":ZenMode<CR>", {})
         end,
     },
     {
@@ -199,24 +199,26 @@ return {
     },
     {
         "epwalsh/obsidian.nvim", --note taking plugin
-        version = "*", -- recommended, use latest release instead of latest commit
+        version = "*",           -- recommended, use latest release instead of latest commit
         lazy = true,
         ft = "markdown",
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-    },
-    {
-        "petertriho/nvim-scrollbar",
-        config = function()
-            require("scrollbar").setup()
-        end,
-    },
-    {
-        "Cassin01/wf.nvim", --modern which-key
-        config = function()
-            require("wf").setup()
-        end,
+        opts = {
+            workspaces = {
+                {
+                    name = "personal",
+                    path = "~/vaults/personal",
+                },
+                {
+                    name = "work",
+                    path = "~/vaults/work",
+                },
+            },
+
+            -- see below for full list of options 👇
+        },
     },
     {
         "cshuaimin/ssr.nvim", --select and replace with variables and multiline support
@@ -258,7 +260,7 @@ return {
             function _G.set_terminal_keymaps()
                 local opts = { buffer = 0 }
                 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-                vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+                -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
                 vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
                 vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
                 vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
@@ -299,17 +301,17 @@ return {
             require('leap').opts.highlight_unlabeled_phase_one_targets = true
         end
     },
-    {
-        'phaazon/hop.nvim', --another one
-        branch = 'v2', -- optional but strongly recommended
-        config = function()
-            -- you can configure Hop the way you like here; see :h hop-config
-            require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-            vim.keymap.set("", "z", function()
-                vim.cmd("HopPattern")
-            end, {})
-        end
-    },
+    -- {
+    --     'phaazon/hop.nvim', --another one
+    --     branch = 'v2', -- optional but strongly recommended
+    --     config = function()
+    --         -- you can configure Hop the way you like here; see :h hop-config
+    --         require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    --         vim.keymap.set("", "z", function()
+    --             vim.cmd("HopPattern")
+    --         end, {})
+    --     end
+    -- },
     {
         "j-morano/buffer_manager.nvim",
         config = function()
@@ -363,11 +365,12 @@ return {
             vim.keymap.set("n", "<leader><leader>a", "<cmd>AerialNavToggle<CR>")
         end
     },
-    {
-        "lukas-reineke/headlines.nvim", --for markdown (they are nice)
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = true, -- or `opts = {}`
-    },
+    -- {
+    --     "lukas-reineke/headlines.nvim",
+    --     dependencies = "nvim-treesitter/nvim-treesitter",
+    --     -- commit = "e3d7bfdf40e41a020d966d35f8b48d75b90367d2",
+    --     opts = {},
+    -- },
     {
         "AckslD/nvim-FeMaco.lua", --edit md codeblocks in floating window
         config = function()
@@ -375,24 +378,115 @@ return {
             vim.keymap.set("", "<C-e>", "<cmd>FeMaco<CR>", {})
         end,
     },
-    {
-        "EthanJWright/vs-tasks.nvim",
-        dependencies = {
-            "nvim-lua/popup.nvim",
-            "nvim-lua/plenary.nvim",
-            -- "nvim-telescope/telescope.nvim",
+    { -- This plugin
+        "Zeioth/compiler.nvim",
+        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+        dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
+        opts = {},
+    },
+    { -- The task runner we use
+        "stevearc/overseer.nvim",
+        commit = "6271cab7ccc4ca840faa93f54440ffae3a3918bd",
+        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+        opts = {
+            task_list = {
+                direction = "bottom",
+                min_height = 25,
+                max_height = 25,
+                default_detail = 1
+            },
         },
-        config = function()
-            require("vstask").setup()
-            vim.cmd([[
-                nnoremap <Leader>ta :lua require("telescope").extensions.vstask.tasks()<CR>
-                nnoremap <Leader>ti :lua require("telescope").extensions.vstask.inputs()<CR>
-                nnoremap <Leader>th :lua require("telescope").extensions.vstask.history()<CR>
-                nnoremap <Leader>tl :lua require('telescope').extensions.vstask.launch()<cr>
-            ]])
-        end,
     },
     "alec-gibson/nvim-tetris",
+    --[ neorg ]--
+    {
+        "vhyrro/luarocks.nvim",
+        priority = 1000, -- We'd like this plugin to load first out of the rest
+        config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
+    },
+    -- {
+    --     "champignoom/norg-pandoc",
+    --     branch = "neorg-plugin",
+    --     config = true,
+    -- },
+    {
+        "nvim-neorg/neorg",
+        dependencies = { "luarocks.nvim",
+            { "nvim-lua/plenary.nvim" },
+            { "laher/neorg-exec" },
+            { "nvim-neorg/neorg-telescope" }
+        },
+        config = function()
+            require("neorg").setup {
+                load = {
+                    ["core.defaults"] = {},
+                    ["core.export"] = {},           -- export to md
+                    ["core.promo"] = {},            -- manage indent
+                    ["core.concealer"] = {
+                        config = {                  -- We added a `config` table!
+                            icon_preset = "varied", -- And we set our option here.
+                        },
+                    },
+                    ["core.tangle"] = {},          -- Add tangling support
+                    ["core.esupports.metagen"] = { -- Automatically sync document meta
+                        config = {
+                            type = "auto",
+                        }
+                    },
+                    ["core.dirman"] = {
+                        config = {
+                            workspaces = {
+                                notes = "~/notes",
+                            },
+                            default_workspace = "notes",
+                        },
+                    },
+                    ["core.presenter"] = {
+                        config = {
+                            zen_mode = "zen-mode",
+                        },
+                    },
+                    --integrating?
+                    ["core.completion"] = {
+                        config = {
+                            engine = "nvim-cmp",
+                        }
+                    },
+                    ["core.qol.toc"] = {
+                        config = {
+                            close_after_use = true,
+                        },
+                    },
+                    ["core.integrations.nvim-cmp"] = {},
+                    -- ["external.pandoc"] = {},
+                    ["core.integrations.telescope"] = {},
+                    ["external.exec"] = {
+                        config = {
+                            default_metadata = {
+                                out = "virtual"
+                            },
+                            lang_cmds = {
+                                cpp = {
+                                    cmd = "g++ ${0} && ./a.out && rm ./a.out",
+                                    type = "compiled",
+                                    main_wrap = [[
+                                    #include <iostream>
+                                    int main() {
+                                        ${1}
+                                    }
+                                    ]],
+                                },
+                            }
+                        }
+                    },
+                },
+            }
+
+            vim.wo.foldlevel = 99
+            vim.wo.conceallevel = 2
+        end,
+    },
+    -- "JamshedVesuna/vim-markdown-preview",
     -- {
     --     'kevinhwang91/nvim-ufo', --folding plugin
     --     dependencies = {

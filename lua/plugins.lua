@@ -1,5 +1,6 @@
 
     local custom_config_path = vim.fn.expand('<sfile>:p:h')
+    -- vim.g.config_folder = custom_config_path
     vim.o.runtimepath = custom_config_path .. ',' .. vim.o.runtimepath
     vim.g.lazy_plugins_path = custom_config_path .. "/lazy_plugins"
     local conf = custom_config_path .. "/lazy_plugins"
@@ -8,6 +9,6 @@
 require("lazy").setup({
     root = conf,
     spec = {
-        { import = "pplugins" },
+        { import = "plugins-list" },
     },
 })
