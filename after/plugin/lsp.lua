@@ -76,6 +76,29 @@ local lsp = {
         }
     end,
 
+    --Civitasv/cmake-tools.nvim required and this is setup for clangd + cmake
+    ["clangd"] = function()
+        require("lspconfig").clangd.setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            root_dir = function() return vim.loop.cwd() end,
+
+            settings = {
+                clangd = {
+                    indentSize = 4,
+                    indentWidth = 4,
+                    tabSize = 4,
+                }
+            },
+
+            on_new_config = function(new_config, new_cwd)
+                local status, cmake = pcall(require, "cmake-tools")
+                if status then
+                    cmake.clangd_on_new_config(new_config)
+                end
+            end,
+        }
+    end,
 }
 
 local lsps = MasonLspPackages()

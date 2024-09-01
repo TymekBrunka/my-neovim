@@ -1,0 +1,1 @@
+/home/tymek/Documents/tree-sitter-cta/queries/Session.vim

@@ -2,6 +2,18 @@ return {
     --[colorschemes]
     "sainnhe/sonokai",
     "neanias/everforest-nvim",
+    "projekt0n/github-nvim-theme",
+    "sainnhe/gruvbox-material",
+    {
+        "navarasu/onedark.nvim",
+        config = function()
+            require('onedark').setup {
+                style = 'warm'
+            }
+            require('onedark').load()
+        end
+    },
+
     --[real plugins]
     "folke/which-key.nvim",
     {
@@ -32,6 +44,15 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim', 'folke/neoconf.nvim' },
     },
     'folke/neodev.nvim', -- new
+    --[cmake]
+    {
+        'Civitasv/cmake-tools.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/overseer.nvim',
+        },
+        config = true,
+    },
     --[code completion]
     {
         'hrsh7th/nvim-cmp',
@@ -212,6 +233,14 @@ return {
                     path = "~/vaults/personal",
                 },
                 {
+                    name = "gex",
+                    path = "~/Documents/gex/notes/md",
+                },
+                {
+                    name = "gex-docs",
+                    path = "~/Documents/gex/docs",
+                },
+                {
                     name = "work",
                     path = "~/vaults/work",
                 },
@@ -378,12 +407,12 @@ return {
             vim.keymap.set("", "<C-e>", "<cmd>FeMaco<CR>", {})
         end,
     },
-    { -- This plugin
-        "Zeioth/compiler.nvim",
-        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-        dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
-        opts = {},
-    },
+    -- { -- This plugin
+    --     "Zeioth/compiler.nvim",
+    --     cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    --     dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
+    --     opts = {},
+    -- },
     { -- The task runner we use
         "stevearc/overseer.nvim",
         commit = "6271cab7ccc4ca840faa93f54440ffae3a3918bd",
@@ -420,11 +449,11 @@ return {
             require("neorg").setup {
                 load = {
                     ["core.defaults"] = {},
-                    ["core.export"] = {},           -- export to md
-                    ["core.promo"] = {},            -- manage indent
+                    ["core.export"] = {},          -- export to md
+                    ["core.promo"] = {},           -- manage indent
                     ["core.concealer"] = {
-                        config = {                  -- We added a `config` table!
-                            icon_preset = "varied", -- And we set our option here.
+                        config = {                 -- We added a `config` table!
+                            icon_preset = "basic", -- And we set our option here.
                         },
                     },
                     ["core.tangle"] = {},          -- Add tangling support
@@ -437,6 +466,8 @@ return {
                         config = {
                             workspaces = {
                                 notes = "~/notes",
+                                gex_notes = "~Documents/gex/notes",
+                                gex_docs = "~Documents/gex/docs",
                             },
                             default_workspace = "notes",
                         },

@@ -13,31 +13,32 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +43 after/plugin/neorg.lua
-badd +19 ~/notes/index.norg
-badd +20 ~/.config/nvim/init.lua
-badd +9 ~/.config/nvim/lua/mappings.lua
-badd +1 ~/.config/nvim/lua/opts.lua
-badd +1 ~/.config/nvim/lua/plugins-list.lua
-badd +9 ~/.config/nvim/lua/plugins.lua
+badd +4 ~/Pobrane/c3-linux/linux/struct.c3
+badd +93 ~/.local/state/nvim/lsp.log
+badd +13 after/plugin/c3-lsp.lua
+badd +75 after/plugin/lsp.lua
+badd +19 ~/.config/nvim/after/plugin/treesitter-dev.lua
 argglobal
 %argdel
-edit ~/.config/nvim/lua/plugins.lua
+edit after/plugin/c3-lsp.lua
 argglobal
-setlocal fdm=expr
-setlocal fde=v:lua.vim.treesitter.foldexpr()
+balt after/plugin/lsp.lua
+setlocal fdm=manual
+setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
 setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 9 - ((8 * winheight(0) + 29) / 58)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 13 - ((12 * winheight(0) + 28) / 56)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 9
-normal! 0
+keepjumps 13
+normal! $
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -51,7 +52,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -1,12 +1,10 @@
 vim.keymap.set("", "<leader>nn", "<CMD>:Neorg keybind norg core.dirman.new.note<CR>")
 vim.keymap.set("", "<leader>nt", "<CMD>:Neorg tangle current-file<CR>")
+vim.keymap.set("", "<leader><leader>n", "<CMD>:Neorg keybind norg core.integrations.telescope.find_norg_files<CR>")
+vim.keymap.set("", "<leader>nb", "<CMD>:Neorg keybind norg core.integrations.telescope.find_backlinks<CR>")
 vim.keymap.set("", "<leader>nm", "<CMD>:ZenMode<CR><CMD>:Neorg presenter start<CR>")
 -- vim.keymap.set("", "<leader>nb", "<CMD>:Neorg export to-file ~/neorg-previewer.md<CR><CMD>:vs ~/neorg-previewer.md<CR><CMD>:MarkdownPreview<CR><C-w>h<C-w>|<C-w>l") --open norg preview with md preview tool
 vim.keymap.set("", "<leader>x", "<CMD>:Neorg exec cursor<CR>")
-
--- vim.api.nvim_set_keymap('n', '<leader>c',
---     ':execute \"autocmd BufWritePost <buffer> Neorg export to-file ~/neorg-previewer.md | wincmd l | e | wincmd h | wincmd \\|\"<CR>:vs ~/neorg-previewer.md<CR>:MarkdownPreview<CR><C-w>h<C-w>|<C-w>l<CR>',
---     { noremap = true, silent = true })
 
 function compile_norg_and_create_autocmd(opt)
     if opt == "file" then
@@ -54,7 +52,6 @@ end
 vim.keymap.set('', '<leader>cc', function()
     compile_norg_and_create_autocmd("file")
 end, {})
-
 -- vim.keymap.set('', '<leader>c', function()
 --     vim.cmd("Neorg export to-file ~/neorg-previewer.md")
 --
