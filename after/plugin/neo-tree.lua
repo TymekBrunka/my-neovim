@@ -5,6 +5,11 @@ require("neo-tree").setup({
         -- filtered_items = {
         --     always_show_by_pattern = { "." }
         -- },
+        window = {
+            mappings = {
+                ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+            }
+        },
         components = {
             icon = function(config, node, state)
                 local icon = config.default or " "

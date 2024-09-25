@@ -22,8 +22,9 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",        -- Optional image support in preview window: See `# Preview Mo
-        },
+            "MunifTanjim/nui.nvim",
+            "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+        }
     },
     --[lsp]
     "williamboman/mason.nvim",
@@ -157,6 +158,28 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
+    },
+    {
+        'akinsho/bufferline.nvim',
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function()
+            local bufferline = require('bufferline');
+            require("bufferline").setup {
+                options = {
+                    style_preset = {
+                        bufferline.style_preset.minimal,
+                        bufferline.style_preset.no_bold,
+                    },
+                    -- tab_size = 16,
+                    separator_style = "thin",
+                    enforce_regular_tabs = true,
+                    offsets = {
+                        filetype = "neo-tree",
+                    },
+                },
+            }
+        end,
     },
     {
         "iamcco/markdown-preview.nvim",

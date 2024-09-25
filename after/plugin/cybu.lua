@@ -26,5 +26,5 @@ cybu.setup({
 })
 vim.keymap.set("n", "<S-Up>", "<Plug>(CybuPrev)")
 vim.keymap.set("n", "<S-Down>", "<Plug>(CybuNext)")
-vim.keymap.set({"n", "v"}, "<c-s-tab>", "<plug>(CybuLastusedPrev)")
-vim.keymap.set({"n", "v"}, "<c-tab>", "<plug>(CybuLastusedNext)")
+vim.keymap.set({"n", "v"}, "<C-S-Tab>", "<plug>(CybuLastusedPrev)")
+vim.keymap.set({"n", "v"}, "<C-Tab>", "<plug>(CybuLastusedNext)")

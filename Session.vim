@@ -13,16 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +4 ~/Pobrane/c3-linux/linux/struct.c3
-badd +93 ~/.local/state/nvim/lsp.log
-badd +13 after/plugin/c3-lsp.lua
-badd +75 after/plugin/lsp.lua
-badd +19 ~/.config/nvim/after/plugin/treesitter-dev.lua
+badd +1 lua/mappings.lua
+badd +6 after/plugin/cybu.lua
+badd +7 lua/plugins-list.lua
 argglobal
 %argdel
-edit after/plugin/c3-lsp.lua
+edit lua/plugins-list.lua
 argglobal
-balt after/plugin/lsp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -33,12 +30,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 13 - ((12 * winheight(0) + 28) / 56)
+let s:l = 7 - ((6 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
-normal! $
+keepjumps 7
+normal! 05|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
