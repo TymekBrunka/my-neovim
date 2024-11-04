@@ -544,7 +544,7 @@ return {
             vim.wo.conceallevel = 2
         end,
     },
-    { 'altermo/nwm', branch = 'x11', opts = {} }, --nvim window manager
+    -- { 'altermo/nwm', branch = 'x11', opts = {} }, --nvim window manager
     "sindrets/winshift.nvim",
     -- "JamshedVesuna/vim-markdown-preview",
     -- {
