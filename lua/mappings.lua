@@ -36,11 +36,11 @@ local function makeTabIfNotExists(gex)
     end
 end
 for i = 1, 9, 1 do
-    vim.keymap.set({ 't', 'n' }, '<A-a-' .. i ..'>', function()
+    vim.keymap.set({ 't', 'n' }, '<A-a><A-' .. i ..'>', function()
         makeTabIfNotExists(i)
         vim.cmd('tabn ' .. i)
     end, {})
-    vim.keymap.set({ 't', 'n' }, '<A-s-' .. i ..'>', function()
+    vim.keymap.set({ 't', 'n' }, '<A-s><A-' .. i ..'>', function()
         makeTabIfNotExists(i)
         vim.cmd('tabn ' .. i)
     end, {})

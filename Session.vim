@@ -15,10 +15,11 @@ else
 endif
 badd +49 after/plugin/nxwm.lua
 badd +125 after/plugin/lualine.lua
-badd +63 lua/mappings.lua
+badd +43 lua/mappings.lua
+badd +182 lua/plugins-list.lua
 argglobal
 %argdel
-edit lua/mappings.lua
+edit lua/plugins-list.lua
 argglobal
 balt after/plugin/nxwm.lua
 setlocal fdm=manual
@@ -31,12 +32,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 63 - ((51 * winheight(0) + 28) / 56)
+let s:l = 182 - ((27 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 63
-normal! 038|
+keepjumps 182
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
