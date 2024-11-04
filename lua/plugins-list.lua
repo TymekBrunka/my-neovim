@@ -159,28 +159,32 @@ return {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
     },
-    {
-        'akinsho/bufferline.nvim',
-        version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            local bufferline = require('bufferline');
-            require("bufferline").setup {
-                options = {
-                    style_preset = {
-                        bufferline.style_preset.minimal,
-                        bufferline.style_preset.no_bold,
-                    },
-                    -- tab_size = 16,
-                    separator_style = "thin",
-                    enforce_regular_tabs = true,
-                    offsets = {
-                        filetype = "neo-tree",
-                    },
-                },
-            }
-        end,
-    },
+    -- {
+    --     'akinsho/bufferline.nvim',
+    --     version = "*",
+    --     dependencies = 'nvim-tree/nvim-web-devicons',
+    --     config = function()
+    --         local bufferline = require('bufferline');
+    --         require("bufferline").setup {
+    --             options = {
+    --                 style_preset = {
+    --                     bufferline.style_preset.minimal,
+    --                     bufferline.style_preset.no_bold,
+    --                 },
+    --                 -- tab_size = 16,
+    --                 mode = "tabs",
+    --                 separator_style = "thin",
+    --                 enforce_regular_tabs = true,
+    --                 offsets = {
+    --                     filetype = "neo-tree",
+    --                 },
+    --                 numbers = function(opts)
+    --                     return string.format('*%s', opts.ordinal)
+    --                 end,
+    --             },
+    --         }
+    --     end,
+    -- },
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -540,6 +544,8 @@ return {
             vim.wo.conceallevel = 2
         end,
     },
+    { 'altermo/nwm', branch = 'x11', opts = {} }, --nvim window manager
+    "sindrets/winshift.nvim",
     -- "JamshedVesuna/vim-markdown-preview",
     -- {
     --     'kevinhwang91/nvim-ufo', --folding plugin
