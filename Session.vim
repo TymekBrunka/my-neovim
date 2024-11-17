@@ -16,12 +16,13 @@ endif
 badd +49 after/plugin/nxwm.lua
 badd +125 after/plugin/lualine.lua
 badd +43 lua/mappings.lua
-badd +182 lua/plugins-list.lua
+badd +171 lua/plugins-list.lua
+badd +141 ~/.config/nvim/after/plugin/cmake-tools.lua
 argglobal
 %argdel
 edit lua/plugins-list.lua
 argglobal
-balt after/plugin/nxwm.lua
+balt ~/.config/nvim/after/plugin/cmake-tools.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +33,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 182 - ((27 * winheight(0) + 27) / 55)
+let s:l = 171 - ((20 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 182
-normal! 0
+keepjumps 171
+normal! 043|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

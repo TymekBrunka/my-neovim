@@ -46,14 +46,14 @@ return {
     },
     'folke/neodev.nvim', -- new
     --[cmake]
-    {
-        'Civitasv/cmake-tools.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/overseer.nvim',
-        },
-        config = true,
-    },
+    -- {
+    --     'Civitasv/cmake-tools.nvim',
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'stevearc/overseer.nvim',
+    --     },
+    --     config = true,
+    -- },
     --[code completion]
     {
         'hrsh7th/nvim-cmp',
@@ -168,12 +168,12 @@ return {
             require("bufferline").setup {
                 options = {
                     style_preset = {
-                        bufferline.style_preset.minimal,
+                        -- bufferline.style_preset.minimal,
                         bufferline.style_preset.no_bold,
                     },
                     -- tab_size = 16,
                     mode = "tabs",
-                    separator_style = "thin",
+                    separator_style = "slant",
                     enforce_regular_tabs = true,
                     offsets = {
                         filetype = "neo-tree",
