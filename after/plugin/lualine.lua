@@ -205,6 +205,12 @@ ins_left {
     },
 }
 
+-- ins_left {
+--     'buffers',
+--     mode = 1,
+--     hide_filename_extension = true,
+-- }
+
 -- Insert mid section. You can make any number of sections in neovim :)
 -- for lualine it's any violet then 2
 ins_left {

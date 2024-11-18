@@ -14,15 +14,17 @@ else
   set shortmess=aoO
 endif
 badd +49 after/plugin/nxwm.lua
-badd +125 after/plugin/lualine.lua
-badd +43 lua/mappings.lua
-badd +171 lua/plugins-list.lua
-badd +141 ~/.config/nvim/after/plugin/cmake-tools.lua
+badd +214 after/plugin/lualine.lua
+badd +21 lua/mappings.lua
+badd +193 lua/plugins-list.lua
+badd +141 after/plugin/cmake-tools.lua
+badd +1 ~/.config/nvim/init.lua
+badd +38 ~/.config/nvim/lua/tab-keybinds.lua
 argglobal
 %argdel
-edit lua/plugins-list.lua
+edit after/plugin/lualine.lua
 argglobal
-balt ~/.config/nvim/after/plugin/cmake-tools.lua
+balt ~/.config/nvim/lua/tab-keybinds.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -33,12 +35,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 171 - ((20 * winheight(0) + 28) / 57)
+let s:l = 214 - ((19 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 171
-normal! 043|
+keepjumps 214
+normal! 05|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
