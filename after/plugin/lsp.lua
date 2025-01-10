@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "tsserver", "html", "pyright", "clangd" }
+    ensure_installed = { "lua_ls", "rust_analyzer", "css-lsp", "typescript-language-server", "html-lsp", "pyright", "clangd" }
 })
 
 local on_attach = function(_, bufnr)
@@ -69,7 +69,7 @@ local lsp = {
     end,
 
     ["tsserver"] = function()
-        require("lspconfig").tsserver.setup {
+        require("lspconfig")["tsserver"].setup {
             on_attach = on_attach,
             capabilities = capabilities,
             root_dir = function() return vim.loop.cwd() end
