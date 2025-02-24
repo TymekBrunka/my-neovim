@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "css-lsp", "typescript-language-server", "html-lsp", "pyright", "clangd" }
+    ensure_installed = { "lua_ls", "rust_analyzer", "css-lsp", "tsserver", "html", "pyright", "clangd" }
 })
 
 local on_attach = function(_, bufnr)
