@@ -37,8 +37,8 @@ local on_attach = function(_, bufnr)
     end, opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local original_capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
 
 lspconfig.c3_lsp.setup {
     on_attach = on_attach,

@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "css-lsp", "tsserver", "html", "pyright", "clangd" }
+    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "tsserver", "html", "pyright", "clangd" }
 })
 
 local on_attach = function(_, bufnr)
@@ -24,8 +24,8 @@ local on_attach = function(_, bufnr)
     end, opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local original_capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
 
 function MasonLspPackages() --get all mason lsp's and return config for every single one of them
     -- local registry = require("mason-registry")
@@ -91,12 +91,12 @@ local lsp = {
                 }
             },
 
-            on_new_config = function(new_config, new_cwd)
-                local status, cmake = pcall(require, "cmake-tools")
-                if status then
-                    cmake.clangd_on_new_config(new_config)
-                end
-            end,
+            -- on_new_config = function(new_config, new_cwd)
+            --     local status, cmake = pcall(require, "cmake-tools")
+            --     if status then
+            --         cmake.clangd_on_new_config(new_config)
+            --     end
+            -- end,
         }
     end,
 }
@@ -108,8 +108,8 @@ for k, v in pairs(lsp) do --merge lsp table and lsp autoconfig
 end
 
 
-for k, v in pairs(lsps) do --merge lsp table and lsp autoconfig
-    -- print("lsp: " .. k)
-end
+-- for k, v in pairs(lsps) do --merge lsp table and lsp autoconfig
+--     print("lsp: " .. k)
+-- end
 
 require("mason-lspconfig").setup_handlers(lsps) --setup lsp's

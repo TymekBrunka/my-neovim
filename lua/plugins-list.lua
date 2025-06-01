@@ -1,21 +1,7 @@
 return {
     --[colorschemes]
-    "sainnhe/sonokai",
-    "neanias/everforest-nvim",
-    "projekt0n/github-nvim-theme",
-    "sainnhe/gruvbox-material",
-    {
-        "navarasu/onedark.nvim",
-        config = function()
-            require('onedark').setup {
-                style = 'warm'
-            }
-            require('onedark').load()
-        end
-    },
-
+    require("plugins-lists.colorschemes"),
     --[real plugins]
-    "folke/which-key.nvim",
     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
@@ -23,73 +9,11 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
-            "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
         }
     },
     --[lsp]
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    {
-        'neovim/nvim-lspconfig',
-        event = { 'BufReadPre', 'BufNewFile' },
-        dependencies = {
-            { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-            'rafi/neoconf-venom.nvim',
-        },
-        config = function(_, opts)
-            require('venom').setup()
-        end,
-    },
-    {
-        'rafi/neoconf-venom.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim', 'folke/neoconf.nvim' },
-    },
-    'folke/neodev.nvim', -- new
-    --[cmake]
-    -- {
-    --     'Civitasv/cmake-tools.nvim',
-    --     dependencies = {
-    --         'nvim-lua/plenary.nvim',
-    --         'stevearc/overseer.nvim',
-    --     },
-    --     config = true,
-    -- },
-    --[code completion]
-    {
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            'rafamadriz/friendly-snippets',
-
-            'hrsh7th/cmp-nvim-lsp',
-
-        },
-    },
-    --[other must haves]
-    {
-        "folke/trouble.nvim",
-        opts = { use_diagnostic_signs = true },
-    },
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    {
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require('nvim-treesitter.configs').setup {
-                ensure_installed = { 'vim', 'vimdoc', 'lua', 'cpp', 'c', 'markdown', 'html', 'css', 'javascript' },
-                auto_install = false,
-                highlight = { enable = true },
-                indent = { enable = true },
-            }
-        end
-    },
+    require("plugins-lists.lsp_etc"),
+    require("plugins-lists.generic_must_haves"),
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.6',
@@ -246,37 +170,6 @@ return {
         opts = {} -- this is equalent to setup({}) function
     },
     {
-        "epwalsh/obsidian.nvim", --note taking plugin
-        version = "*",           -- recommended, use latest release instead of latest commit
-        lazy = true,
-        ft = "markdown",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        opts = {
-            workspaces = {
-                {
-                    name = "personal",
-                    path = "~/vaults/personal",
-                },
-                {
-                    name = "gex",
-                    path = "~/Documents/gex/notes/md",
-                },
-                {
-                    name = "gex-docs",
-                    path = "~/Documents/gex/docs",
-                },
-                {
-                    name = "work",
-                    path = "~/vaults/work",
-                },
-            },
-
-            -- see below for full list of options 👇
-        },
-    },
-    {
         "cshuaimin/ssr.nvim", --select and replace with variables and multiline support
         module = "ssr",
         -- Calling setup is optional.
@@ -323,12 +216,12 @@ return {
                 vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
                 vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 
-                vim.keymap.set('t', '<C-`>', [[<Cmd>ToggleTerm<CR>]], opts)
+                vim.keymap.set('t', '<C-x>', [[<Cmd>ToggleTerm<CR>]], opts)
             end
 
             -- if you only want these mappings for toggle term use term://*toggleterm#* instead
             vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-            vim.keymap.set('', '<C-`>', function()
+            vim.keymap.set('', '<C-x>', function()
                 vim.cmd("ToggleTerm")
             end, {})
         end,
@@ -357,17 +250,6 @@ return {
             require('leap').opts.highlight_unlabeled_phase_one_targets = true
         end
     },
-    -- {
-    --     'phaazon/hop.nvim', --another one
-    --     branch = 'v2', -- optional but strongly recommended
-    --     config = function()
-    --         -- you can configure Hop the way you like here; see :h hop-config
-    --         require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-    --         vim.keymap.set("", "z", function()
-    --             vim.cmd("HopPattern")
-    --         end, {})
-    --     end
-    -- },
     {
         "j-morano/buffer_manager.nvim",
         config = function()
@@ -395,162 +277,66 @@ return {
         end,
     },
     {
-        "tpope/vim-fugitive", --gyt klone
-        config = function()
-            vim.keymap.set("", "<A-g>a", function()
-                vim.cmd("Git add .")
-                vim.cmd("Git commit")
-            end, {})
-        end,
-    },
-    -- "DaikyXendo/nvim-material-icon",
-    "onsails/lspkind.nvim",     --cmp icons
-    {
-        "stevearc/aerial.nvim", --code navigation by functions
-        config = function()
-            require("aerial").setup({
-                -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-                on_attach = function(bufnr)
-                    -- Jump forwards/backwards with '{' and '}'
-                    vim.keymap.set("n", "<A-[>", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-                    vim.keymap.set("n", "<A-]>", "<cmd>AerialNext<CR>", { buffer = bufnr })
-                end,
-            })
-            -- You probably also want to set a keymap to toggle aerial
-            vim.keymap.set("n", "<leader><A-a>", "<cmd>AerialToggle!<CR>")
-            vim.keymap.set("n", "<leader><leader>a", "<cmd>AerialNavToggle<CR>")
-        end
-    },
-    -- {
-    --     "lukas-reineke/headlines.nvim",
-    --     dependencies = "nvim-treesitter/nvim-treesitter",
-    --     -- commit = "e3d7bfdf40e41a020d966d35f8b48d75b90367d2",
-    --     opts = {},
-    -- },
-    {
         "AckslD/nvim-FeMaco.lua", --edit md codeblocks in floating window
         config = function()
             require("femaco").setup()
             vim.keymap.set("", "<C-e>", "<cmd>FeMaco<CR>", {})
         end,
     },
-    -- { -- This plugin
-    --     "Zeioth/compiler.nvim",
-    --     cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-    --     dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
-    --     opts = {},
-    -- },
-    { -- The task runner we use
-        "stevearc/overseer.nvim",
-        commit = "6271cab7ccc4ca840faa93f54440ffae3a3918bd",
-        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-        opts = {
-            task_list = {
-                direction = "bottom",
-                min_height = 25,
-                max_height = 25,
-                default_detail = 1
-            },
-        },
-    },
     "alec-gibson/nvim-tetris",
     --[ neorg ]--
-    {
-        "vhyrro/luarocks.nvim",
-        priority = 1000, -- We'd like this plugin to load first out of the rest
-        config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
-    },
-    -- {
-    --     "champignoom/norg-pandoc",
-    --     branch = "neorg-plugin",
-    --     config = true,
-    -- },
-    {
-        "nvim-neorg/neorg",
-        dependencies = { "luarocks.nvim",
-            { "nvim-lua/plenary.nvim" },
-            { "laher/neorg-exec" },
-            { "nvim-neorg/neorg-telescope" }
-        },
-        config = function()
-            require("neorg").setup {
-                load = {
-                    ["core.defaults"] = {},
-                    ["core.export"] = {},          -- export to md
-                    ["core.promo"] = {},           -- manage indent
-                    ["core.concealer"] = {
-                        config = {                 -- We added a `config` table!
-                            icon_preset = "basic", -- And we set our option here.
-                        },
-                    },
-                    ["core.tangle"] = {},          -- Add tangling support
-                    ["core.esupports.metagen"] = { -- Automatically sync document meta
-                        config = {
-                            type = "auto",
-                        }
-                    },
-                    ["core.dirman"] = {
-                        config = {
-                            workspaces = {
-                                notes = "~/notes",
-                                gex_notes = "~Documents/gex/notes",
-                                gex_docs = "~Documents/gex/docs",
-                            },
-                            default_workspace = "notes",
-                        },
-                    },
-                    ["core.presenter"] = {
-                        config = {
-                            zen_mode = "zen-mode",
-                        },
-                    },
-                    --integrating?
-                    ["core.completion"] = {
-                        config = {
-                            engine = "nvim-cmp",
-                        }
-                    },
-                    ["core.qol.toc"] = {
-                        config = {
-                            close_after_use = true,
-                        },
-                    },
-                    ["core.integrations.nvim-cmp"] = {},
-                    -- ["external.pandoc"] = {},
-                    ["core.integrations.telescope"] = {},
-                    ["external.exec"] = {
-                        config = {
-                            default_metadata = {
-                                out = "virtual"
-                            },
-                            lang_cmds = {
-                                cpp = {
-                                    cmd = "g++ ${0} && ./a.out && rm ./a.out",
-                                    type = "compiled",
-                                    main_wrap = [[
-                                    #include <iostream>
-                                    int main() {
-                                        ${1}
-                                    }
-                                    ]],
-                                },
-                            }
-                        }
-                    },
-                },
-            }
-
-            vim.wo.foldlevel = 99
-            vim.wo.conceallevel = 2
-        end,
-    },
     -- { 'altermo/nwm', branch = 'x11', opts = {} }, --nvim window manager
-    "sindrets/winshift.nvim",
     -- "JamshedVesuna/vim-markdown-preview",
     -- {
     --     'kevinhwang91/nvim-ufo', --folding plugin
     --     dependencies = {
     --         'kevinhwang91/promise-async'
     --     }
-    -- }
+    -- },
+    {
+        'arnamak/stay-centered.nvim',
+        opts = {
+            -- The filetype is determined by the vim filetype, not the file extension. In order to get the filetype, open a file and run the command:
+            -- :lua print(vim.bo.filetype)
+            skip_filetypes = {},
+            -- Set to false to disable by default
+            enabled = true,
+            -- allows scrolling to move the cursor without centering, default recommended
+            allow_scroll_move = true,
+            -- temporarily disables plugin on left-mouse down, allows natural mouse selection
+            -- try disabling if plugin causes lag, function uses vim.on_key
+            disable_on_mouse = true,
+        }
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+            lsp = {
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                },
+            },
+            -- you can enable a preset for easier configuration
+            presets = {
+                bottom_search = true, -- use a classic bottom cmdline for search
+                -- command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true, -- long messages will be sent to a split
+                inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false, -- add a border to hover docs and signature help
+            },
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
+    },
 }

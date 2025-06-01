@@ -13,34 +13,35 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +30 ~/.local/state/nvim/mason.log
-badd +49 after/plugin/nxwm.lua
-badd +250 after/plugin/lualine.lua
-badd +21 lua/mappings.lua
-badd +193 lua/plugins-list.lua
-badd +141 after/plugin/cmake-tools.lua
-badd +3 ~/.config/nvim/after/plugin/lsp.lua
+badd +327 lua/plugins-list.lua
+badd +13 lua/plugins-lists/colorschemes.lua
+badd +1 init.lua
+badd +99 lua/plugins-lists/lsp_etc.lua
+badd +4 lua/plugins-lists/generic_must_haves.lua
+badd +1 lua/opts.lua
+badd +3 lua/mappings.lua
+badd +103 after/plugin/lsp.lua
 argglobal
 %argdel
-edit ~/.config/nvim/after/plugin/lsp.lua
+edit lua/plugins-list.lua
 argglobal
-balt after/plugin/nxwm.lua
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=99
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
+balt lua/mappings.lua
+setlocal foldmethod=manual
+setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
+setlocal foldmarker={{{,}}}
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 3 - ((2 * winheight(0) + 27) / 55)
+let s:l = 327 - ((36 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 3
-normal! 059|
+keepjumps 327
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
