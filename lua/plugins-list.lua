@@ -20,32 +20,9 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = true,
     },
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     --[qol plugins]
-    {
-        "mg979/vim-visual-multi" --if removed, lualine wont work bc i made it depend on it in after/plugins/lualine.lua
-    },
-    {
-        "kylechui/nvim-surround",
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-                keymaps = {
-                    insert = "<C-g>s",
-                    insert_line = "<C-g>S",
-                    normal = "ys",
-                    normal_cur = "yss",
-                    normal_line = "yS",
-                    normal_cur_line = "ySS",
-                    visual = "S",
-                    visual_line = "gS",
-                    delete = "ds",
-                    change = "cs",
-                    change_line = "cS",
-                },
-            })
-        end
-    },
+    require("plugins-lists.code_editing"),
     {
         "NvChad/nvim-colorizer.lua",
         config = function()
@@ -134,63 +111,12 @@ return {
             require('local-highlight').setup()
         end
     },
-    --[SUStech overpowered selection manager]
-    --enter to increase selection and backspace to decrease
-    {
-        "sustech-data/wildfire.nvim",
-        event = "VeryLazy",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = function()
-            require("wildfire").setup({
-                surrounds = {
-                    { "(", ")" },
-                    { "{", "}" },
-                    { "<", ">" },
-                    { "[", "]" },
-                },
-                -- keymaps = {
-                -- 	init_selection = "<CR>",
-                -- 	node_incremental = "<CR>",
-                -- 	node_decremental = "<BS>",
-                -- },
-                -- filetype_exclude = { "qf" }, --keymaps will be unset in excluding filetypes
-            })
-        end,
-    },
     {
         "folke/zen-mode.nvim",
         config = function()
             require("zen-mode").setup()
             vim.keymap.set("", "<leader><leader>z", ":ZenMode<CR>", {})
         end,
-    },
-    {
-        'windwp/nvim-autopairs',
-        event = "InsertEnter",
-        opts = {} -- this is equalent to setup({}) function
-    },
-    {
-        "cshuaimin/ssr.nvim", --select and replace with variables and multiline support
-        module = "ssr",
-        -- Calling setup is optional.
-        config = function()
-            require("ssr").setup {
-                border = "rounded",
-                min_width = 50,
-                min_height = 5,
-                max_width = 120,
-                max_height = 25,
-                adjust_window = true,
-                keymaps = {
-                    close = "q",
-                    next_match = "n",
-                    prev_match = "N",
-                    replace_confirm = "<cr>",
-                    replace_all = "<leader><cr>",
-                },
-            }
-            vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
-        end
     },
     -- {
     --     'AckslD/muren.nvim',
@@ -201,31 +127,6 @@ return {
     --         end, {})
     --     end,
     -- },
-    {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        config = function()
-            require("toggleterm").setup()
-            function _G.set_terminal_keymaps()
-                local opts = { buffer = 0 }
-                vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-                -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-                vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-                vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-                vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-                vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-                vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
-
-                vim.keymap.set('t', '<C-x>', [[<Cmd>ToggleTerm<CR>]], opts)
-            end
-
-            -- if you only want these mappings for toggle term use term://*toggleterm#* instead
-            vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-            vim.keymap.set('', '<C-x>', function()
-                vim.cmd("ToggleTerm")
-            end, {})
-        end,
-    },
     {
         "ggandor/leap.nvim", --plugin for jumping in code
         config = function()
@@ -323,12 +224,19 @@ return {
             },
             -- you can enable a preset for easier configuration
             presets = {
-                bottom_search = true, -- use a classic bottom cmdline for search
-                -- command_palette = true, -- position the cmdline and popupmenu together
+                bottom_search = false,        -- use a classic bottom cmdline for search
+                command_palette = false,      -- position the cmdline and popupmenu together
                 long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = false, -- add a border to hover docs and signature help
+                inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false,       -- add a border to hover docs and signature help
             },
+
+            cmdline = {
+                enabled = false,
+            },
+            messages = {
+                enabled = false,
+            }
         },
         dependencies = {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -339,4 +247,11 @@ return {
             "rcarriga/nvim-notify",
         }
     },
+    {
+        'nacro90/numb.nvim',
+        config = function()
+            require('numb').setup()
+        end,
+    },
+    "lewis6991/gitsigns.nvim",
 }

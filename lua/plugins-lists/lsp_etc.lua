@@ -44,7 +44,26 @@ return {
             -- C-k: Toggle signature help (if signature.enabled = true)
             --
             -- See :h blink-cmp-config-keymap for defining your own keymap
-            keymap = { preset = 'super-tab' },
+            keymap = {
+                preset = 'none',
+
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-e>'] = { 'hide' },
+                ['<Tab>'] = { 'select_and_accept', 'fallback' },
+
+                ['<Up>'] = { 'select_prev', 'fallback' },
+                ['<Down>'] = { 'select_next', 'fallback' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+                ['<C-Tab>'] = { 'snippet_forward', 'fallback' },
+                ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+
+                ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+            },
 
             appearance = {
                 -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -124,5 +143,30 @@ return {
         config = function()
             require("Comment").setup()
         end
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        config = function()
+            require("toggleterm").setup()
+            function _G.set_terminal_keymaps()
+                local opts = { buffer = 0 }
+                vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+                -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+                vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+                vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+                vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+                vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+                vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+
+                vim.keymap.set('t', '<C-x>', [[<Cmd>ToggleTerm<CR>]], opts)
+            end
+
+            -- if you only want these mappings for toggle term use term://*toggleterm#* instead
+            vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+            vim.keymap.set('', '<C-x>', function()
+                vim.cmd("ToggleTerm")
+            end, {})
+        end,
     },
 }
