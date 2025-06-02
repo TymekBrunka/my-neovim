@@ -22,7 +22,7 @@ badd +1 lua/opts.lua
 badd +1 lua/mappings.lua
 badd +12 after/plugin/lsp.lua
 badd +1 after/plugin/neo-tree.lua
-badd +3 ~/.config/nvim/lua/plugins-lists/code_editing.lua
+badd +3 lua/plugins-lists/code_editing.lua
 argglobal
 %argdel
 edit lua/plugins-lists/lsp_etc.lua
@@ -38,7 +38,7 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 64 - ((27 * winheight(0) + 27) / 55)
+let s:l = 64 - ((30 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
