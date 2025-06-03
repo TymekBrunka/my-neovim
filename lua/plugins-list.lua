@@ -5,6 +5,7 @@ return {
     --[real plugins]
     --[lsp]
     require("plugins-lists.lsp_etc"),
+    require("plugins-lists.debugging"),
     require("plugins-lists.generic_must_haves"),
     {
         'nvim-telescope/telescope.nvim',
