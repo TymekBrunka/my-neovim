@@ -13,21 +13,23 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +21 ~/.config/nvim/lua/plugins-list.lua
-badd +66 ~/.config/nvim/lua/plugins-lists/visuals.lua
-badd +14 ~/.config/nvim/lua/plugins-lists/pickers.lua
-badd +10 ~/.config/nvim/lua/plugins-lists/debugging.lua
-badd +54 ~/.config/nvim/lua/plugins-lists/lsp_etc.lua
-badd +4 ~/.config/nvim/after/plugin/lsp_and_debugging.lua
-badd +11 ~/.config/nvim/lua/plugins-lists/code_editing.lua
-badd +1 ~/.config/nvim/after/plugin/cmp.lua
+badd +23 lua/plugins-list.lua
+badd +93 lua/plugins-lists/visuals.lua
+badd +14 lua/plugins-lists/pickers.lua
+badd +10 lua/plugins-lists/debugging.lua
+badd +54 lua/plugins-lists/lsp_etc.lua
+badd +114 after/plugin/lsp_and_debugging.lua
+badd +58 lua/plugins-lists/code_editing.lua
+badd +1 after/plugin/cmp.lua
+badd +1 lua/plugins-lists/generic_must_haves.lua
+badd +5 after/plugin/vim-markdown-preview.vim
 argglobal
 %argdel
-edit ~/.config/nvim/after/plugin/lsp_and_debugging.lua
+edit after/plugin/vim-markdown-preview.vim
 argglobal
-balt ~/.config/nvim/lua/plugins-lists/visuals.lua
+balt after/plugin/lsp_and_debugging.lua
 setlocal foldmethod=manual
-setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
+setlocal foldexpr=0
 setlocal foldmarker={{{,}}}
 setlocal foldignore=#
 setlocal foldlevel=0
@@ -36,12 +38,12 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 4 - ((3 * winheight(0) + 27) / 55)
+let s:l = 5 - ((4 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 027|
+keepjumps 5
+normal! 02|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

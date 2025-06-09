@@ -69,8 +69,8 @@ local lsp = {
         }
     end,
 
-    ["tsserver"] = function()
-        require("lspconfig")["tsserver"].setup {
+    ["ts_ls"] = function()
+        require("lspconfig")["ts_ls"].setup {
             on_attach = on_attach,
             capabilities = capabilities,
             root_dir = function() return vim.loop.cwd() end
@@ -109,9 +109,10 @@ for k, v in pairs(lsp) do --merge lsp table and lsp autoconfig
 end
 
 
--- for k, v in pairs(lsps) do --merge lsp table and lsp autoconfig
---     print("lsp: " .. k)
--- end
+for k, v in pairs(lsps) do --merge lsp table and lsp autoconfig
+    -- print("lsp: " .. k)
+    v()
+end
 
 -- require("mason-lspconfig").setup_handlers(lsps) --setup lsp's
 
@@ -120,19 +121,19 @@ require("mason-nvim-dap").setup({
     ensure_installed = { "python", "delve" },
     handlers = {
         function(config)
-          -- all sources with no handler get passed here
+            -- all sources with no handler get passed here
 
-          -- Keep original functionality
-          require('mason-nvim-dap').default_setup(config)
+            -- Keep original functionality
+            require('mason-nvim-dap').default_setup(config)
         end,
         -- python = function(config)
         --     config.adapters = {
-	       --      type = "executable",
-	       --      command = "/usr/bin/python3",
-	       --      args = {
-		      --       "-m",
-		      --       "debugpy.adapter",
-	       --      },
+        --      type = "executable",
+        --      command = "/usr/bin/python3",
+        --      args = {
+        --       "-m",
+        --       "debugpy.adapter",
+        --      },
         --     }
         --     require('mason-nvim-dap').default_setup(config) -- don't forget this!
         -- end,
