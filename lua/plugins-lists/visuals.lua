@@ -63,12 +63,12 @@ return {
         end,
     },
     { "lukas-reineke/indent-blankline.nvim",      main = "ibl",  opts = {} },
-    {
-        'tzachar/local-highlight.nvim',
-        config = function()
-            require('local-highlight').setup()
-        end
-    },
+    -- {
+    --     'tzachar/local-highlight.nvim',
+    --     config = function()
+    --         require('local-highlight').setup()
+    --     end
+    -- },
     {
         'arnamak/stay-centered.nvim',
         opts = {

@@ -1,6 +1,7 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "tsserver", "html", "pyright", "clangd" }
+    ensure_installed = { "lua_ls", "rust_analyzer", "cssls", "ts_ls", "html", "pyright", "clangd" },
+    automatic_enable = true
 })
 
 local on_attach = function(_, bufnr)
@@ -112,7 +113,7 @@ end
 --     print("lsp: " .. k)
 -- end
 
-require("mason-lspconfig").setup_handlers(lsps) --setup lsp's
+-- require("mason-lspconfig").setup_handlers(lsps) --setup lsp's
 
 --[ MASON NVIM DAP]
 require("mason-nvim-dap").setup({

@@ -13,12 +13,19 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +99 ~/.config/nvim/lua/plugins-lists/visuals.lua
-badd +8 ~/.config/nvim/lua/plugins-lists/pickers.lua
+badd +21 ~/.config/nvim/lua/plugins-list.lua
+badd +66 ~/.config/nvim/lua/plugins-lists/visuals.lua
+badd +14 ~/.config/nvim/lua/plugins-lists/pickers.lua
+badd +10 ~/.config/nvim/lua/plugins-lists/debugging.lua
+badd +54 ~/.config/nvim/lua/plugins-lists/lsp_etc.lua
+badd +4 ~/.config/nvim/after/plugin/lsp_and_debugging.lua
+badd +11 ~/.config/nvim/lua/plugins-lists/code_editing.lua
+badd +1 ~/.config/nvim/after/plugin/cmp.lua
 argglobal
 %argdel
-edit ~/.config/nvim/lua/plugins-lists/visuals.lua
+edit ~/.config/nvim/after/plugin/lsp_and_debugging.lua
 argglobal
+balt ~/.config/nvim/lua/plugins-lists/visuals.lua
 setlocal foldmethod=manual
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
@@ -29,12 +36,12 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 99 - ((26 * winheight(0) + 27) / 55)
+let s:l = 4 - ((3 * winheight(0) + 27) / 55)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 99
-normal! 02|
+keepjumps 4
+normal! 027|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
