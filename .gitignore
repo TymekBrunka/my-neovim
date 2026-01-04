@@ -1,6 +1,2 @@
-lazy/
-/lazy
-/lazy/
-lazy_plugins/
-/lazy_plugins
-/lazy_plugins/
+parsers/
+plugins/
