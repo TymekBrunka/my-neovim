@@ -7,7 +7,7 @@ LOADED_PLUGINS = {}
 
 local function install(plugin)
   local repo = ""
-  local cmd = { "git", "clone", "--depth=1", "https://github.com/" }
+  local cmd = { "git", "clone", "--depth=1",  }
 
   -- get repo
   if type(plugin) == "string" then
@@ -15,13 +15,17 @@ local function install(plugin)
   else
     repo = plugin[1]
   end
+
+  if repo:sub(1, #"http") ~= "http" then
+    repo = "https://github.com/" .. repo
+  end
   -- construct path to clone repo
   local name = string.sub(repo, repo:find('/') + 1)
   local path = vim.fn.expand(plugin_dir .. '/' .. name)
 
   -- dont clone when we have the folder
   if vim.fn.isdirectory(path) then
-    cmd[4] = cmd[4] .. repo
+    cmd[4] = repo
     table.insert(cmd, path)
 
     -- additional options (preinstall)

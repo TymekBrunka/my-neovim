@@ -149,7 +149,7 @@ plug.install_many {
     end
   },
   {
-    "ggandor/leap.nvim", --plugin for jumping in code
+    "https://codeberg.org/andyg/leap.nvim.git", --plugin for jumping in code
     config = function()
       -- require('leap').create_default_mappings()
       vim.keymap.set('', 's', '<Plug>(leap)')
