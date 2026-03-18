@@ -53,6 +53,14 @@ local function install(plugin)
       end
     end
     vim.fn.system(cmd)
+
+    -- build step if specified
+    if type(plugin) == "table" then
+      if plugin.build ~= nil then
+        vim.opt.rtp:prepend(path)
+        plugin.build()
+      end
+    end
   end
 
   if LOADED_PLUGINS[name] == nil then

@@ -172,4 +172,26 @@ plug.install_many {
       require('leap').opts.highlight_unlabeled_phase_one_targets = true
     end
   },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
+  {
+    'Kicamon/markdown-table-mode.nvim',
+    config = function()
+      require('markdown-table-mode').setup({
+        filetype = {
+          '*.md',
+        },
+        options = {
+          insert = true,            -- when typing "|"
+          insert_leave = true,      -- when leaving insert
+          pad_separator_line = false, -- add space in separator line
+          alig_style = 'default',   -- default, left, center, right
+        },
+      })
+    end
+  }
 }
