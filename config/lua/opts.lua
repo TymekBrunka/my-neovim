@@ -1,8 +1,7 @@
 vim.cmd("let g:netrw_liststyle = 3")
-
 local opt = vim.opt
 
-opt.relativenumber = true
+-- opt.relativenumber = true -- turned off bc i werent using it most of the time
 opt.number = true
 
 -- tabs & indentation
@@ -37,3 +36,6 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+
+opt.foldmethod = "indent"
